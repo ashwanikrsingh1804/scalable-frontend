@@ -8,7 +8,7 @@ const Home = () => {
   const [data, setData] = useState([]);
 
   const loadData = async () => {
-    const response = await axios.get("http://localhost:3000/api/get");
+    const response = await axios.get("http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com/api/get");
     setData(response.data);
   }; 
 
@@ -20,7 +20,7 @@ const Home = () => {
     if (
       window.confirm("Are you sure that you wanted to delete that contact ?")
     ) {
-      axios.delete(`http://localhost:3000/api/remove/${id}`);
+      axios.delete(`http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com/api/remove/${id}`);
       toast.success("Contact Deleted Successfully");
       setTimeout(() => loadData(), 500);
     }

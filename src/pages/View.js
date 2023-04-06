@@ -10,7 +10,7 @@ const View = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/get/${id}`)
+      .get(`http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com/api/get/${id}`)
       .then((resp) => setUser({ ...resp.data[0] }));
   }, [id]);
   return (
