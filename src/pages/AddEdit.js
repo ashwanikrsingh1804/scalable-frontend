@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams, Link } from "react-router-dom";
 import "./AddEdit.css";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { ToastContainer,toast } from "react-toastify";
 
 const initialState = {
   name: "",
