@@ -8,6 +8,7 @@ const Home = () => {
   const [data, setData] = useState([]);
 
   const loadData = async () => {
+    @Crossorigin(origins = "http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com")
     const response = await axios.get("http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com/api/get");
     setData(response.data);
   }; 
