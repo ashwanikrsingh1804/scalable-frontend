@@ -21,7 +21,7 @@ const AddEdit = () => {
 
   useEffect(() => {
     axios
-      .get(`http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com//api/get/${id}`)
+      .get(`http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com/api/get/${id}`)
       .then((resp) => setState({ ...resp.data[0] }));
   }, [id]);
 
