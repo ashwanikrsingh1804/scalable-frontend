@@ -21,7 +21,7 @@ const AddEdit = () => {
 
   useEffect(() => {
     axios
-      .get(`https://cors-everywhere.herokuapp.com/http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com/api/get/${id}`)
+      .get(`http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com//api/get/${id}`)
       .then((resp) => setState({ ...resp.data[0] }));
   }, [id]);
 
@@ -32,7 +32,7 @@ const AddEdit = () => {
     } else {
       if (!id) {
         axios
-          .post("https://cors-everywhere.herokuapp.com/http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com/api/post", {
+          .post("http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com//api/post", {
             name,
             email,
             contact,
@@ -44,7 +44,7 @@ const AddEdit = () => {
         toast.success("Contact Added Successfully");
       } else {
         axios
-          .put(`https://cors-everywhere.herokuapp.com/http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com/api/update/${id}`, {
+          .put(`http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com//api/update/${id}`, {
             name,
             email,
             contact,
