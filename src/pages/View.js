@@ -9,6 +9,7 @@ const View = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    
     axios
       .get(`http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com/api/get/${id}`)
       .then((resp) => setUser({ ...resp.data[0] }));
