@@ -8,7 +8,8 @@ const Home = () => {
   const [data, setData] = useState([]);
 
   const loadData = async () => {
-    const response = await axios.get("http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com//api/get");
+    // const response = await axios.get("http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com//api/get");
+    const response = await axios.get("https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/get");
     setData(response.data);
   }; 
 
