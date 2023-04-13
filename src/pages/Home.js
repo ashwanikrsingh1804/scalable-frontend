@@ -44,6 +44,7 @@ const Home = () => {
         </thead>
         <tbody>
           {data.map((item, index) => {
+            console.log(item);
             return (
               <tr key={item.id}>
                 <th scope="row">{index + 1}</th>
@@ -51,6 +52,7 @@ const Home = () => {
                 <td>{item.email}</td>
                 <td>{item.contact}</td>
                 <td>
+                  
                   <Link to={`/update/${item.id}`}>
                     <button className="btn btn-edit">Edit</button>
                   </Link>
