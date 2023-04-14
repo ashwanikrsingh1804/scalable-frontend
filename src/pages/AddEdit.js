@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams, Link } from "react-router-dom";
 import "./AddEdit.css";
 import axios from "axios";
-import { ToastContainer,toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 const initialState = {
   name: "",
@@ -22,7 +22,9 @@ const AddEdit = () => {
   useEffect(() => {
     axios
       // .get(`http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com/api/get/${id}`)
-      .get(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/get/${id}`)
+      .get(
+        `https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/get/${id}`,
+      )
       .then((resp) => setState({ ...resp.data[0] }));
   }, [id]);
 
@@ -33,11 +35,14 @@ const AddEdit = () => {
     } else {
       if (!id) {
         axios
-          .post("https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/post", {
-            name,
-            email,
-            contact,
-          })
+          .post(
+            "https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/post",
+            {
+              name,
+              email,
+              contact,
+            },
+          )
           .then(() => {
             setState({ name: "", email: "", contact: "" });
           })
@@ -45,11 +50,14 @@ const AddEdit = () => {
         toast.success("Contact Added Successfully");
       } else {
         axios
-          .put(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/update/${id}`, {
-            name,
-            email,
-            contact,
-          })
+          .put(
+            `https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/update/${id}`,
+            {
+              name,
+              email,
+              contact,
+            },
+          )
           .then(() => {
             setState({ name: "", email: "", contact: "" });
           })
