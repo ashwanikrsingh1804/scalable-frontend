@@ -1,20 +1,23 @@
 import React from "react";
 import InvoiceHeader from "../components/InvoiceHeader";
 import InvoiceBody from "../components/InvoiceBody";
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import CustomerDetails from "../components/CustomerDetails";
 import { useQuery } from "react-query";
 import axios from "axios";
 import DoctorDetails from "../components/DoctorDetails";
+import { useParams } from "react-router-dom";
 
 const Invoice = () => {
-  const prescriptionId = 6;
-  const { data } = useQuery(["prescriptionData", prescriptionId], () =>
-    axios
-      .get(
-        `https://zp819166nj.execute-api.us-east-1.amazonaws.com/Prescription/${prescriptionId}`,
-      )
-      .then((response) => response.data[0]),
+  const { prescriptionId } = useParams();
+  const { data, isLoading } = useQuery(
+    ["prescriptionData", prescriptionId],
+    () =>
+      axios
+        .get(
+          `https://zp819166nj.execute-api.us-east-1.amazonaws.com/Prescription/${prescriptionId}`,
+        )
+        .then((response) => response.data[0]),
   );
 
   const { data: medicineData } = useQuery(
@@ -48,20 +51,29 @@ const Invoice = () => {
 
   if (!(allMedicine && medicineData)) return <></>;
 
+  const notFound = !data && !isLoading;
+
   const medicines = medicineData.map((medicine) => {
     return allMedicine.find((med) => med.ID === medicine.Id);
   });
 
-  console.log(medicines);
   return (
     <>
       <Stack p={4} maxWidth={900} mx="auto" gap={4}>
         <InvoiceHeader />
-        <Stack direction="row">
-          <CustomerDetails prescriptionId={1} />
-          {doctorData && <DoctorDetails {...doctorData} />}
-        </Stack>
-        <InvoiceBody data={medicines} />
+        {notFound ? (
+          <>
+            <Typography>The Prescription was not found</Typography>
+          </>
+        ) : (
+          <>
+            <Stack direction="row">
+              <CustomerDetails prescriptionId={1} />
+              {doctorData && <DoctorDetails {...doctorData} />}
+            </Stack>
+            <InvoiceBody data={medicines} />
+          </>
+        )}
       </Stack>
     </>
   );

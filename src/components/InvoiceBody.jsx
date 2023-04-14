@@ -40,7 +40,6 @@ export default function InvoiceBody({ data }) {
         </TableHead>
         <TableBody>
           {rows.map((row) => {
-            console.log(row);
             return (
               <TableRow
                 key={row.name}
@@ -57,7 +56,10 @@ export default function InvoiceBody({ data }) {
                     name={`quantities.${row.ID}`}
                     control={control}
                     defaultValue={row.quantity}
-                    render={({ field, fieldState: { error } }) => (
+                    render={({
+                      field: { onChange, ...field },
+                      fieldState: { error },
+                    }) => (
                       <TextField
                         variant="standard"
                         size="small"
@@ -80,6 +82,16 @@ export default function InvoiceBody({ data }) {
                         error={Boolean(error)}
                         helperText={error?.message}
                         {...field}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (value < 0) {
+                            return onChange(0);
+                          }
+                          if (value > row.availableQuantity) {
+                            return onChange(row.availableQuantity);
+                          }
+                          onChange(value);
+                        }}
                       />
                     )}
                     rules={{ min: 0, max: row.availableQuantity }}

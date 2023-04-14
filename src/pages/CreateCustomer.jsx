@@ -6,11 +6,23 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useForm } from "react-hook-form";
 import TextInput from "../components/TextInput";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateCustomer() {
   const { control, handleSubmit } = useForm();
+  const navigate = useNavigate();
   const onSubmit = (data) => {
-    console.log(data);
+    axios
+      .post("https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/post", {
+        name: data.name,
+        email: data.email,
+        contact: data.contact,
+      })
+      .then((resp) => {
+        console.log(resp.status);
+        navigate("/invoice/" + data.prescriptionId);
+      });
   };
 
   return (
@@ -43,7 +55,13 @@ export default function CreateCustomer() {
             name="email"
             control={control}
             label="Email"
-            rules={{ required: "Email is required" }}
+            rules={{
+              required: "Email is required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "invalid email address",
+              },
+            }}
           />
           <TextInput
             name="contact"
@@ -56,6 +74,7 @@ export default function CreateCustomer() {
             name="prescriptionId"
             label="Prescription Id"
             rules={{ required: "Prescripton Id is required" }}
+            type="number"
           />
           <Button
             type="submit"

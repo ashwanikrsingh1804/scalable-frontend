@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 import React from "react";
 import { Controller } from "react-hook-form";
 
-function TextInput({ name, control, label, rules }) {
+function TextInput({ name, control, label, rules, type = "text" }) {
   return (
     <Controller
       name={name}
@@ -14,6 +14,7 @@ function TextInput({ name, control, label, rules }) {
           fullWidth
           label={label}
           error={Boolean(error)}
+          type={type}
           helperText={error?.message}
           {...field}
         />
