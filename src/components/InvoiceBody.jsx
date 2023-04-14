@@ -6,10 +6,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { TextField } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
+import { Button, TextField } from "@mui/material";
+import { Controller, set, useForm } from "react-hook-form";
+import { useState } from "react";
 
 export default function InvoiceBody({ data }) {
+  const [paid, setPaid] = useState(false);
   const { control, watch } = useForm({
     defaultValues: {
       quantities: Object.fromEntries(data.map((row) => [row.ID, 1])),
@@ -28,91 +30,103 @@ export default function InvoiceBody({ data }) {
   const total = rows.reduce((a, b) => a + b.amount, 0);
 
   return (
-    <TableContainer component={Paper} variant="outlined">
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Description</TableCell>
-            <TableCell align="center">Quantity</TableCell>
-            <TableCell align="center">Unit Price</TableCell>
-            <TableCell align="right">Amount</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => {
-            return (
-              <TableRow
-                key={row.name}
-                sx={{
-                  "&:last-child td, &:last-child th": { border: 0 },
-                  verticalAlign: "top",
-                }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="center">
-                  <Controller
-                    name={`quantities.${row.ID}`}
-                    control={control}
-                    defaultValue={row.quantity}
-                    render={({
-                      field: { onChange, ...field },
-                      fieldState: { error },
-                    }) => (
-                      <TextField
-                        variant="standard"
-                        size="small"
-                        type="number"
-                        inputProps={{
-                          style: {
-                            textAlign: "center",
+    <>
+      <TableContainer component={Paper} variant="outlined">
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Description</TableCell>
+              <TableCell align="center">Quantity</TableCell>
+              <TableCell align="center">Unit Price</TableCell>
+              <TableCell align="right">Amount</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => {
+              return (
+                <TableRow
+                  key={row.name}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                    verticalAlign: "top",
+                  }}
+                >
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell align="center">
+                    <Controller
+                      name={`quantities.${row.ID}`}
+                      control={control}
+                      defaultValue={row.quantity}
+                      render={({
+                        field: { onChange, ...field },
+                        fieldState: { error },
+                      }) => (
+                        <TextField
+                          variant="standard"
+                          size="small"
+                          type="number"
+                          inputProps={{
+                            style: {
+                              textAlign: "center",
+                              border: "none",
+                              margin: 0,
+                            },
+                            min: 0,
+                            max: row.availableQuantity,
+                          }}
+                          InputProps={{
+                            disableUnderline: true,
+                          }}
+                          sx={{
                             border: "none",
-                            margin: 0,
-                          },
-                          min: 0,
-                          max: row.availableQuantity,
-                        }}
-                        InputProps={{
-                          disableUnderline: true,
-                        }}
-                        sx={{
-                          border: "none",
-                        }}
-                        error={Boolean(error)}
-                        helperText={error?.message}
-                        {...field}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          if (value < 0) {
-                            return onChange(0);
-                          }
-                          if (value > row.availableQuantity) {
-                            return onChange(row.availableQuantity);
-                          }
-                          onChange(value);
-                        }}
-                      />
-                    )}
-                    rules={{ min: 0, max: row.availableQuantity }}
-                  />
-                </TableCell>
-                <TableCell align="center">{row.price}</TableCell>
-                <TableCell align="right">{row.amount.toFixed(2)}</TableCell>
-              </TableRow>
-            );
-          })}
-          <TableRow>
-            <TableCell colSpan={2} />
-            <TableCell align="center" sx={{ fontWeight: 500 }}>
-              Total
-            </TableCell>
-            <TableCell align="right" sx={{ fontWeight: 500 }}>
-              {total.toFixed(2)}
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
+                          }}
+                          error={Boolean(error)}
+                          helperText={error?.message}
+                          {...field}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (value < 0) {
+                              return onChange(0);
+                            }
+                            if (value > row.availableQuantity) {
+                              return onChange(row.availableQuantity);
+                            }
+                            onChange(value);
+                          }}
+                        />
+                      )}
+                      rules={{ min: 0, max: row.availableQuantity }}
+                    />
+                  </TableCell>
+                  <TableCell align="center">{row.price}</TableCell>
+                  <TableCell align="right">{row.amount.toFixed(2)}</TableCell>
+                </TableRow>
+              );
+            })}
+            <TableRow>
+              <TableCell colSpan={2} />
+              <TableCell align="center" sx={{ fontWeight: 500 }}>
+                Total ({paid ? "Paid" : "Due"})
+              </TableCell>
+              <TableCell align="right" sx={{ fontWeight: 500 }}>
+                {total.toFixed(2)}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Button
+        onClick={() => setPaid((paid) => !paid)}
+        variant="contained"
+        color={paid ? "success" : "warning"}
+        sx={{
+          alignSelf: "end",
+        }}
+      >
+        {paid ? "Paid" : "Due"}
+      </Button>
+    </>
   );
 }
