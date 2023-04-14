@@ -68,7 +68,7 @@ const Invoice = () => {
         ) : (
           <>
             <Stack direction="row">
-              <CustomerDetails prescriptionId={1} />
+              <CustomerDetails name={data?.PatientName} />
               {doctorData && <DoctorDetails {...doctorData} />}
             </Stack>
             <InvoiceBody data={medicines} />

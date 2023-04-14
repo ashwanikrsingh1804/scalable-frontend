@@ -1,16 +1,14 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 
-function CustomerDetails() {
+function CustomerDetails({ name }) {
   return (
     <>
       <Box width="100%">
         <Typography fontWeight="bold" color="orange">
           Bill To:
         </Typography>
-        <Typography>Alstair Burko</Typography>
-        <Typography>1156 High Street</Typography>
-        <Typography>Santa Cruz, California, 95064</Typography>
+        <Typography>{name}</Typography>
       </Box>
     </>
   );
