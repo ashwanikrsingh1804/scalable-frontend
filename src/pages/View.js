@@ -11,7 +11,7 @@ const View = () => {
   useEffect(() => {
     
     axios
-      .get(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/get/${id}`)
+      .get(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/get/${ID}`)
       .then((resp) => setUser({ ...resp.data[0] }));
   }, [id]);
   return (

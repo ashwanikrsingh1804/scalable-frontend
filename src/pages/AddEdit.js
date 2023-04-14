@@ -17,12 +17,12 @@ const AddEdit = () => {
 
   const history = useHistory();
 
-  const { id } = useParams();
+  const { ID } = useParams();
 
   useEffect(() => {
     axios
       // .get(`http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com/api/get/${id}`)
-      .get(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/get/${id}`)
+      .get(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/get/${ID}`)
       .then((resp) => setState({ ...resp.data[0] }));
   }, [id]);
 
@@ -45,7 +45,7 @@ const AddEdit = () => {
         toast.success("Contact Added Successfully");
       } else {
         axios
-          .put(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/update/${id}`, {
+          .put(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/update/${ID}`, {
             name,
             email,
             contact,

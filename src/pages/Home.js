@@ -17,11 +17,11 @@ const Home = () => {
     loadData();
   }, []);
 
-  const deleteContact = (id) => {
+  const deleteContact = (ID) => {
     if (
       window.confirm("Are you sure that you wanted to delete that contact ?")
     ) {
-      axios.delete(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/remove/${id}`);
+      axios.delete(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/remove/${ID}`);
       toast.success("Contact Deleted Successfully");
       setTimeout(() => loadData(), 500);
     }
