@@ -6,7 +6,7 @@ import "./View.css";
 const View = () => {
   const [user, setUser] = useState({});
 
-  const { id } = useParams();
+  const { ID } = useParams();
 
   useEffect(() => {
     
@@ -22,7 +22,7 @@ const View = () => {
         </div>
         <div className="container">
           <strong>ID: </strong>
-          <span>{id}</span>
+          <span>{ID}</span>
           <br />
           <br />
           <strong>Name: </strong>

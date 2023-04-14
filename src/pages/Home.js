@@ -46,7 +46,7 @@ const Home = () => {
           {data.map((item, index) => {
             console.log(item);
             return (
-              <tr key={item.id}>
+              <tr key={item.ID}>
                 <th scope="row">{index + 1}</th>
                 <td>{item.name}</td>
                 <td>{item.email}</td>
