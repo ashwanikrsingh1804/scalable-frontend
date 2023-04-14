@@ -6,12 +6,12 @@ import "./View.css";
 const View = () => {
   const [user, setUser] = useState({});
 
-  const { ID } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     
     axios
-      .get(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/get/${ID}`)
+      .get(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/get/${id}`)
       .then((resp) => setUser({ ...resp.data[0] }));
   }, [id]);
   return (
@@ -22,7 +22,7 @@ const View = () => {
         </div>
         <div className="container">
           <strong>ID: </strong>
-          <span>{ID}</span>
+          <span>{id}</span>
           <br />
           <br />
           <strong>Name: </strong>

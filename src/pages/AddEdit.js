@@ -17,12 +17,12 @@ const AddEdit = () => {
 
   const history = useHistory();
 
-  const { ID } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     axios
       // .get(`http://testenv-env.eba-e6qrxgvz.us-east-1.elasticbeanstalk.com/api/get/${id}`)
-      .get(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/get/${ID}`)
+      .get(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/get/${id}`)
       .then((resp) => setState({ ...resp.data[0] }));
   }, [id]);
 
@@ -45,7 +45,7 @@ const AddEdit = () => {
         toast.success("Contact Added Successfully");
       } else {
         axios
-          .put(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/update/${ID}`, {
+          .put(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/update/${id}`, {
             name,
             email,
             contact,
@@ -104,7 +104,7 @@ const AddEdit = () => {
           value={contact || ""}
           onChange={handleInputChange}
         />
-        <input type="submit" value={ID ? "Update" : "Save"} />
+        <input type="submit" value={id ? "Update" : "Save"} />
         <Link to="/">
           <input type="button" value="Go Back" />
         </Link>

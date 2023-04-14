@@ -17,11 +17,11 @@ const Home = () => {
     loadData();
   }, []);
 
-  const deleteContact = (ID) => {
+  const deleteContact = (id) => {
     if (
       window.confirm("Are you sure that you wanted to delete that contact ?")
     ) {
-      axios.delete(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/remove/${ID}`);
+      axios.delete(`https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/remove/${id}`);
       toast.success("Contact Deleted Successfully");
       setTimeout(() => loadData(), 500);
     }
@@ -46,7 +46,7 @@ const Home = () => {
           {data.map((item, index) => {
             console.log(item);
             return (
-              <tr key={item.ID}>
+              <tr key={item.id}>
                 <th scope="row">{index + 1}</th>
                 <td>{item.name}</td>
                 <td>{item.email}</td>
