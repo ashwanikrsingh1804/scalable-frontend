@@ -40,7 +40,7 @@ export default function InvoiceBody({ data, email, name }) {
               "https://d6hv1f8eaf.execute-api.us-east-1.amazonaws.com/scp-project/sendmail",
               {
                 "from-email": "vikrantsonawane2@gmail.com",
-                "from-name": "medibuddy",
+                "from-name": "My Meedical",
                 subject:
                   "Payment Confirmation for Your Recent Order at medibuddy",
                 "text-part": `Dear ${name},
@@ -52,7 +52,7 @@ export default function InvoiceBody({ data, email, name }) {
               Thank you for choosing our medical store. We appreciate your business.
               
               Best regards,
-              medibuddy`,
+              My Medical`,
                 recipients: [{ Email: email }],
               },
             )
