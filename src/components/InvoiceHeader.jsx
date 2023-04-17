@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 
-function InvoiceHeader() {
+function InvoiceHeader({ number }) {
   return (
     <Box display="flex" justifyContent="space-between">
       <Box>
@@ -14,7 +14,7 @@ function InvoiceHeader() {
         <Typography variant="h5" color="orange">
           Invoice
         </Typography>
-        <Typography textAlign="right">#1234</Typography>
+        <Typography textAlign="right">#{number}</Typography>
       </Box>
     </Box>
   );

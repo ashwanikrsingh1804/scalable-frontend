@@ -18,10 +18,11 @@ export default function CreateCustomer() {
         name: data.name,
         email: data.email,
         contact: data.contact,
+        prescriptionId: data.prescriptionId,
       })
       .then((resp) => {
-        console.log(resp.status);
-        navigate("/invoice/" + data.prescriptionId);
+        if (!resp.data?.insertId) return;
+        navigate("/invoice/" + resp.data.insertId);
       });
   };
 

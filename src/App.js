@@ -21,7 +21,7 @@ const router = createBrowserRouter([
     element: <CreateCustomer />,
   },
   {
-    path: "/invoice/:prescriptionId",
+    path: "/invoice/:customerId",
     element: <Invoice />,
   },
 ]);

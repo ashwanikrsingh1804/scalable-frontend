@@ -1,15 +1,15 @@
 import React from "react";
 import InvoiceHeader from "../components/InvoiceHeader";
 import InvoiceBody from "../components/InvoiceBody";
-import { Stack, Typography } from "@mui/material";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
 import CustomerDetails from "../components/CustomerDetails";
 import { useQuery } from "react-query";
 import axios from "axios";
 import DoctorDetails from "../components/DoctorDetails";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { ArrowBack } from "@mui/icons-material";
 
-const Invoice = () => {
-  const { prescriptionId } = useParams();
+const Invoice = ({ prescriptionId, email, name }) => {
   const { data, isLoading } = useQuery(
     ["prescriptionData", prescriptionId],
     () =>
@@ -59,24 +59,49 @@ const Invoice = () => {
 
   return (
     <>
-      <Stack p={4} maxWidth={900} mx="auto" gap={4}>
-        <InvoiceHeader />
-        {notFound ? (
-          <>
-            <Typography>The Prescription was not found</Typography>
-          </>
-        ) : (
-          <>
-            <Stack direction="row">
-              <CustomerDetails name={data?.PatientName} />
-              {doctorData && <DoctorDetails {...doctorData} />}
-            </Stack>
-            <InvoiceBody data={medicines} />
-          </>
-        )}
-      </Stack>
+      {notFound ? (
+        <>
+          <Typography>The Prescription was not found</Typography>
+        </>
+      ) : (
+        <>
+          <Stack direction="row">
+            <CustomerDetails name={data?.PatientName} />
+            {doctorData && <DoctorDetails {...doctorData} />}
+          </Stack>
+          <InvoiceBody data={medicines} email={email} name={name} />
+        </>
+      )}
     </>
   );
 };
 
-export default Invoice;
+const InvoicePage = () => {
+  const { customerId } = useParams();
+  const navigate = useNavigate();
+  const { data, isError } = useQuery(["getCustomer"], () =>
+    axios
+      .get(
+        `https://opfhi0k7o6.execute-api.us-east-1.amazonaws.com/api/get/${customerId}`,
+      )
+      .then((resp) => {
+        return resp.data[0];
+      }),
+  );
+  if (isError) {
+    return <Typography>something went wrong</Typography>;
+  }
+  return (
+    <Stack p={4} maxWidth={900} mx="auto" gap={4}>
+      {/* <Box> */}
+      <IconButton sx={{ alignSelf: "start" }} onClick={() => navigate(-1)}>
+        <ArrowBack />
+      </IconButton>
+      {/* </Box> */}
+      <InvoiceHeader number={customerId} />
+      {data && <Invoice {...data} />}
+    </Stack>
+  );
+};
+
+export default InvoicePage;
