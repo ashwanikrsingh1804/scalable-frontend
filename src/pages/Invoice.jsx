@@ -35,7 +35,8 @@ const Invoice = ({ prescriptionId, email, name }) => {
     () =>
       axios
         .get(
-          `https://o97v5r6uy4.execute-api.us-east-1.amazonaws.com/api/Doctor/${data?.DoctorId}`,
+          //`https://o97v5r6uy4.execute-api.us-east-1.amazonaws.com/api/Doctor/${data?.DoctorId}`,
+          `https://o97v5r6uy4.execute-api.us-east-1.amazonaws.com/${data?.DoctorId}`,
         )
         .then((resp) => resp.data),
     { enabled: Boolean(data) },
