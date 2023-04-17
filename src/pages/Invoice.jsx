@@ -35,7 +35,7 @@ const Invoice = ({ prescriptionId, email, name }) => {
     () =>
       axios
         .get(
-          `http://apicodepiepline-env.eba-ecpienbe.us-east-1.elasticbeanstalk.com/api/Doctor/${data?.DoctorId}`,
+          `https://o97v5r6uy4.execute-api.us-east-1.amazonaws.com/api/Doctor/${data?.DoctorId}`,
         )
         .then((resp) => resp.data),
     { enabled: Boolean(data) },
